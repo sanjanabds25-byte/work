@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My To-Do List</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e9edf5;
+      min-height: 100vh;
+    }
+
+    .task-text.completed {
+      text-decoration: line-through;
+      color: #888;
+    }
+
+    .delete-btn {
+      background: #dc2626;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+
+    .delete-btn:hover {
+      background: #b91c1c;
+    }
+
+    .task-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .task-text {
+      flex: 1;
+      overflow-wrap: anywhere;
+    }
+
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #2563eb;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+
+<body class="flex flex-col items-center px-4 py-10">
+
+  <main class="w-full max-w-xl rounded-2xl bg-orange-50 p-6 sm:p-8 shadow-lg">
+
+    <h1 class="text-center text-3xl font-bold text-blue-900">
+      My To-Do List
+    </h1>
+
+    <p class="mt-2 mb-6 text-center text-sm text-gray-500">
+      Add tasks, tick them when done, delete when not needed
+    </p>
+
+    <!-- Add Task -->
+    <form id="taskForm" class="flex gap-2 mb-6">
+      <input
+        type="text"
+        id="taskInput"
+        placeholder="Enter a new task..."
+        class="min-w-0 flex-1 rounded-lg border-2 border-gray-300 bg-white px-4 py-3 outline-none focus:border-blue-500"
+        autocomplete="off"
+      >
+
+      <button
+        type="submit"
+        class="rounded-lg bg-blue-700 px-5 py-3 font-semibold text-white hover:bg-blue-800"
+      >
+        Add
+      </button>
+    </form>
+
+    <p id="errorMessage" class="mb-3 text-sm text-red-600" role="alert"></p>
+
+    <!-- Task List -->
+    <div id="taskList"></div>
+
+    <!-- Task Counter -->
+    <p id="taskCounter" class="mt-6 text-center text-sm text-gray-500">
+      0 of 0 tasks completed
+    </p>
+
+  </main>
+
+  <footer class="mt-7 text-center text-sm text-gray-600">
+    Sanjana Jayant Budhe · CD25045
+  </footer>
+
+  <script>
+    const taskForm = document.getElementById("taskForm");
+    const taskInput = document.getElementById("taskInput");
+    const taskList = document.getElementById("taskList");
+    const taskCounter = document.getElementById("taskCounter");
+    const errorMessage = document.getElementById("errorMessage");
+
+    let tasks = [
+      { id: 1, text: "MDM Practical Lab Manual", completed: false },
+      { id: 2, text: "JAVA Unit 4 Test", completed: false },
+      { id: 3, text: "IC PPT Presentation", completed: false }
+    ];
+
+    let nextId = 4;
+
+    function renderTasks() {
+      taskList.replaceChildren();
+
+      tasks.forEach(function(task) {
+        const row = document.createElement("div");
+        row.className = "task-row";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = task.completed;
+        checkbox.setAttribute(
+          "aria-label",
+          "Mark " + task.text + " as completed"
+        );
+
+        checkbox.addEventListener("change", function() {
+          task.completed = checkbox.checked;
+          renderTasks();
+        });
+
+        const text = document.createElement("span");
+        text.className = "task-text";
+        text.textContent = task.text;
+
+        if (task.completed) {
+          text.classList.add("completed");
+        }
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-btn";
+        deleteButton.setAttribute("aria-label", "Delete " + task.text);
+
+        deleteButton.addEventListener("click", function() {
+          tasks = tasks.filter(function(item) {
+            return item.id !== task.id;
+          });
+          renderTasks();
+        });
+
+        row.append(checkbox, text, deleteButton);
+        taskList.appendChild(row);
+      });
+
+      const completedCount = tasks.filter(function(task) {
+        return task.completed;
+      }).length;
+
+      taskCounter.textContent =
+        completedCount + " of " + tasks.length + " tasks completed";
+    }
+
+    taskForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const taskText = taskInput.value.trim();
+
+      if (taskText === "") {
+        errorMessage.textContent = "Please enter a task!";
+        taskInput.focus();
+        return;
+      }
+
+      tasks.push({
+        id: nextId++,
+        text: taskText,
+        completed: false
+      });
+
+      errorMessage.textContent = "";
+      taskInput.value = "";
+      renderTasks();
+      taskInput.focus();
+    });
+
+    renderTasks();
+  </script>
+
+</body>
+</html>
