@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FocusDesk - Focus Timer</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body {
+  background: #080d18;
+  color: #f8fafc;
+  font-family: Arial, sans-serif;
+}
+.panel {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 16px;
+}
+.action {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: .2s;
+}
+.action:hover { opacity: .85; }
+.green { background: #10b981; color: #06281e; }
+.blue { background: #0ea5e9; color: #fff; }
+.gray { background: #374151; color: white; }
+.stat { background: #151e2e; border-radius: 12px; padding: 16px; }
+</style>
+</head>
+
+<body class="min-h-screen p-4 sm:p-8">
+
+<main class="max-w-6xl mx-auto">
+
+  <header class="text-center mb-8">
+    <h1 class="text-4xl font-extrabold">
+      Focus<span class="text-emerald-400">Desk</span>
+    </h1>
+    <p class="text-gray-400 mt-3">
+      A productive daily timer that helps you stay focused.
+      Focus on one task at a time and track your daily progress.
+    </p>
+  </header>
+
+  <!-- Statistics -->
+  <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+    <div class="stat text-center">
+      <p class="text-gray-400">Sessions Today</p>
+      <p id="sessionsToday" class="text-3xl font-bold text-emerald-400 mt-2">0</p>
+    </div>
+
+    <div class="stat text-center">
+      <p class="text-gray-400">Minutes Focused Today</p>
+      <p id="minutesToday" class="text-3xl font-bold text-sky-400 mt-2">0</p>
+    </div>
+
+    <div class="stat text-center">
+      <p class="text-gray-400">All-Time Sessions</p>
+      <p id="allSessions" class="text-3xl font-bold text-pink-400 mt-2">0</p>
+    </div>
+  </section>
+
+  <!-- Timer and Session Log -->
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <div class="panel p-6 sm:p-8">
+      <div class="flex gap-3 mb-6">
+        <button id="focusMode" class="action green">Focus (25 min)</button>
+        <button id="breakMode" class="action gray">Short Break</button>
+      </div>
+
+      <h2 id="modeTitle" class="text-xl font-bold">Focus Session</h2>
+
+      <div id="timer"
+           class="text-6xl sm:text-8xl font-bold text-center my-8"
+           aria-live="polite">25:00</div>
+
+      <label for="taskName" class="block text-gray-400 mb-2">
+        What are you working on?
+      </label>
+      <input
+        id="taskName"
+        type="text"
+        placeholder="Enter your task..."
+        class="w-full rounded-lg bg-gray-900 border border-gray-700 p-3 text-white outline-none focus:border-emerald-400"
+      >
+
+      <p id="status" class="text-gray-400 text-sm mt-3 mb-5">
+        Ready to start your focused session.
+      </p>
+
+      <div class="flex flex-wrap gap-3">
+        <button id="startBtn" class="action green">Start</button>
+        <button id="stopBtn" class="action blue">Stop &amp; Log</button>
+        <button id="resetBtn" class="action gray">Reset</button>
+      </div>
+    </div>
+
+    <div class="panel p-6 sm:p-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Session Log</h2>
+        <button id="clearLog" class="text-sm text-pink-400">Clear log</button>
+      </div>
+
+      <div id="sessionLog" class="space-y-3">
+        <p id="emptyMessage" class="text-gray-400 text-center py-10">
+          No sessions yet. Start your first focused session!
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="text-center text-gray-500 text-sm mt-8">
+    FocusDesk · Build better study habits, one session at a time.
+                 Sanjana Budhe CD25045
+  </footer>
+
+</main>
+
+<script>
+const timerDisplay = document.getElementById("timer");
+const modeTitle = document.getElementById("modeTitle");
+const statusText = document.getElementById("status");
+const taskInput = document.getElementById("taskName");
+
+const focusButton = document.getElementById("focusMode");
+const breakButton = document.getElementById("breakMode");
+const startButton = document.getElementById("startBtn");
+const stopButton = document.getElementById("stopBtn");
+const resetButton = document.getElementById("resetBtn");
+
+let mode = "focus";
+let duration = 25 * 60;
+let remaining = duration;
+let interval = null;
+let running = false;
+let sessionStart = null;
+
+let sessions = [];
+
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return String(mins).padStart(2, "0") + ":" +
+         String(secs).padStart(2, "0");
+}
+
+function updateTimer() {
+  timerDisplay.textContent = formatTime(remaining);
+  document.title = formatTime(remaining) + " - FocusDesk";
+}
+
+function updateStats() {
+  const today = new Date().toDateString();
+
+  const todaysSessions = sessions.filter(
+    session => session.date === today && session.mode === "focus"
+  );
+
+  const minutes = todaysSessions.reduce(
+    (sum, session) => sum + session.minutes, 0
+  );
+
+  document.getElementById("sessionsToday").textContent =
+    todaysSessions.length;
+
+  document.getElementById("minutesToday").textContent = minutes;
+
+  document.getElementById("allSessions").textContent =
+    sessions.filter(session => session.mode === "focus").length;
+}
+
+function renderLog() {
+  const log = document.getElementById("sessionLog");
+  log.replaceChildren();
+
+  if (sessions.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "text-gray-400 text-center py-10";
+    empty.textContent =
+      "No sessions yet. Start your first focused session!";
+    log.appendChild(empty);
+    return;
+  }
+
+  sessions.slice().reverse().forEach(session => {
+    const card = document.createElement("div");
+    card.className =
+      "bg-gray-900 border border-gray-700 rounded-lg p-4";
+
+    const title = document.createElement("p");
+    title.className = "font-semibold";
+    title.textContent = session.task;
+
+    const details = document.createElement("p");
+    details.className = "text-sm text-gray-400 mt-2";
+    details.textContent =
+      session.mode + " · " + session.minutes + " minute(s) · " +
+      session.time;
+
+    card.append(title, details);
+    log.appendChild(card);
+  });
+}
+
+function stopTimer() {
+  if (interval !== null) {
+    clearInterval(interval);
+    interval = null;
+  }
+  running = false;
+}
+
+function switchMode(newMode) {
+  stopTimer();
+  mode = newMode;
+
+  duration = mode === "focus" ? 25 * 60 : 5 * 60;
+  remaining = duration;
+  sessionStart = null;
+
+  modeTitle.textContent =
+    mode === "focus" ? "Focus Session" : "Short Break";
+
+  focusButton.className =
+    "action " + (mode === "focus" ? "green" : "gray");
+  breakButton.className =
+    "action " + (mode === "break" ? "green" : "gray");
+
+  statusText.textContent = "Ready to start your session.";
+  updateTimer();
+}
+
+function startTimer() {
+  if (running) return;
+
+  if (remaining <= 0) remaining = duration;
+
+  running = true;
+  sessionStart = Date.now();
+  statusText.textContent = "Session in progress...";
+  
+  interval = setInterval(() => {
+    const elapsed = Math.floor((Date.now() - sessionStart) / 1000);
+    remaining = Math.max(0, duration - elapsed);
+    updateTimer();
+
+    if (remaining <= 0) {
+      stopTimer();
+      saveSession(true);
+      statusText.textContent = "Session completed!";
+      alert("Session completed! Great work.");
+    }
+  }, 250);
+}
+
+function saveSession(completed = false) {
+  if (running) stopTimer();
+
+  const elapsed = duration - remaining;
+
+  if (elapsed <= 0) {
+    statusText.textContent = "No time recorded. Start the timer first.";
+    return;
+  }
+
+  const task = taskInput.value.trim() || "Untitled task";
+  const minutes = Math.max(1, Math.floor(elapsed / 60));
+
+  sessions.push({
+    task: task,
+    mode: mode,
+    minutes: minutes,
+    date: new Date().toDateString(),
+    time: new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  });
+
+  renderLog();
+  updateStats();
+
+  if (!completed) {
+    statusText.textContent = "Session saved to your log.";
+  }
+
+  remaining = duration;
+  sessionStart = null;
+  updateTimer();
+}
+
+startButton.addEventListener("click", startTimer);
+
+stopButton.addEventListener("click", () => {
+  if (running || remaining < duration) {
+    saveSession(false);
+  } else {
+    statusText.textContent = "Start the timer before logging a session.";
+  }
+});
+
+resetButton.addEventListener("click", () => {
+  stopTimer();
+  remaining = duration;
+  sessionStart = null;
+  statusText.textContent = "Timer reset. Ready when you are.";
+  updateTimer();
+});
+
+focusButton.addEventListener("click", () => switchMode("focus"));
+breakButton.addEventListener("click", () => switchMode("break"));
+
+document.getElementById("clearLog").addEventListener("click", () => {
+  sessions = [];
+  renderLog();
+  updateStats();
+  statusText.textContent = "Session log cleared.";
+});
+
+updateTimer();
+updateStats();
+renderLog();
+</script>
+
+</body>
+</html>
