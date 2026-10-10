@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:24px 14px;font-family:Arial,sans-serif;background:#f4f7f5;color:#222}
+.page{max-width:760px;margin:auto}
+.qr-section{text-align:center;background:#fff;padding:16px;border-radius:12px;margin-bottom:22px}
+.qr-section h2{font-size:17px}
+.qr-section img{width:160px;height:160px}
+.form-card{max-width:620px;margin:auto;background:#fff;padding:28px 30px;border-radius:14px;box-shadow:0 6px 24px #162a1a12}
+h1{text-align:center;color:#79283b;font-size:28px;margin:0 0 4px}
+.subtitle{text-align:center;color:#777;font-size:14px;margin-bottom:24px}
+.field{margin-bottom:17px}
+label{display:block;font-size:14px;font-weight:bold;margin-bottom:7px}
+.required{color:#b42335}
+input,select{width:100%;padding:12px 13px;border:1px solid #aab5ae;border-radius:8px;font:inherit;background:#fff}
+input:focus,select:focus{outline:2px solid #327a55}
+.hint,.error{font-size:12px;margin:5px 0 0}
+.hint{color:#777}
+.error{color:#c0262d}
+button[type=submit]{width:100%;border:0;border-radius:8px;padding:13px;background:#79283b;color:white;font-size:16px;font-weight:bold;cursor:pointer}
+#success{display:none;margin-top:16px;padding:12px;border-radius:8px;background:#e7f7ec;color:#176534;text-align:center}
+footer{text-align:center;color:#777;font-size:12px;margin-top:18px}
+@media(max-width:480px){.form-card{padding:22px 17px}h1{font-size:24px}}
+</style>
+</head>
+
+<body>
+<main class="page">
+
+<section class="qr-section">
+<h2>SCAN QR CODE FOR REGISTRATION</h2>
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https%3A%2F%2Fq.me-qr.com%2Fdayh5dnl" alt="Registration QR Code">
+<p><a href="https://q.me-qr.com/dayh5dnl">Open QR destination</a></p>
+</section>
+
+<section class="form-card">
+<h1>Student Registration</h1>
+<p class="subtitle">Fields marked <span class="required">*</span> are mandatory</p>
+
+<form id="registrationForm" novalidate>
+<div class="field">
+<label for="fullName">Full Name <span class="required">*</span></label>
+<input id="fullName" type="text" placeholder="Enter your full name">
+<p class="error" id="nameError"></p>
+</div>
+
+<div class="field">
+<label for="email">Email <span class="required">*</span></label>
+<input id="email" type="email" placeholder="name@example.com">
+<p class="error" id="emailError"></p>
+</div>
+
+<div class="field">
+<label for="mobile">Mobile Number <span class="required">*</span></label>
+<input id="mobile" type="tel" maxlength="10" inputmode="numeric" placeholder="10-digit mobile number">
+<p class="hint">Enter a valid 10 digit number starting with 6-9.</p>
+<p class="error" id="mobileError"></p>
+</div>
+
+<div class="field">
+<label for="branch">Branch <span class="required">*</span></label>
+<select id="branch">
+<option value="">Select your branch</option>
+<option>Computer Science and Engineering</option>
+<option>Data Science</option>
+<option>Information Technology</option>
+<option>Artificial Intelligence and Machine Learning</option>
+<option>Electronics and Telecommunication</option>
+<option>Mechanical Engineering</option>
+<option>Civil Engineering</option>
+</select>
+<p class="error" id="branchError"></p>
+</div>
+
+<div class="field">
+<label for="password">Password <span class="required">*</span></label>
+<input id="password" type="password" placeholder="At least 6 characters">
+<p class="hint">Password must contain at least 6 characters.</p>
+<p class="error" id="passwordError"></p>
+</div>
+
+<button type="submit">Register</button>
+<div id="success" role="status">Registration form validated successfully!</div>
+</form>
+</section>
+
+<footer>Student Registration Form · Practical No. 8</footer>
+</main>
+
+<script>
+const form = document.getElementById("registrationForm");
+
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("fullName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const branch = document.getElementById("branch").value;
+  const password = document.getElementById("password").value;
+
+  document.querySelectorAll(".error").forEach(function(el) {
+    el.textContent = "";
+  });
+  document.getElementById("success").style.display = "none";
+
+  let valid = true;
+
+  if (name.length < 2) {
+    document.getElementById("nameError").textContent =
+      "Please enter your full name.";
+    valid = false;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById("emailError").textContent =
+      "Please enter a valid email address.";
+    valid = false;
+  }
+
+  if (!/^[6-9]\d{9}$/.test(mobile)) {
+    document.getElementById("mobileError").textContent =
+      "Enter a valid 10-digit mobile number starting with 6-9.";
+    valid = false;
+  }
+
+  if (!branch) {
+    document.getElementById("branchError").textContent =
+      "Please select your branch.";
+    valid = false;
+  }
+
+  if (password.length < 6) {
+    document.getElementById("passwordError").textContent =
+      "Password must be at least 6 characters long.";
+    valid = false;
+  }
+
+  if (valid) {
+    document.getElementById("success").style.display = "block";
+    form.reset();
+  }
+});
+</script>
+</body>
+</html>
