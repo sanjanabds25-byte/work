@@ -4,34 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Showcase</title>
+    <title>Responsive Product Showcase</title>
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-100">
 
     <!-- Header -->
-    <header class="bg-blue-600 text-white p-5 text-center">
+    <header class="bg-blue-600 text-white text-center p-6">
         <h1 class="text-3xl font-bold">Product Showcase</h1>
         <p class="mt-2">Discover Our Latest Collection</p>
     </header>
 
-    <!-- Product Section -->
-    <section class="container mx-auto p-6">
+    <!-- Products -->
+    <main class="container mx-auto px-4 py-8">
 
-        <h2 class="text-2xl font-bold text-center mb-6">
+        <h2 class="text-2xl font-bold text-center mb-8">
             Our Products
         </h2>
 
-        <!-- Flexbox Container -->
-        <div class="flex flex-col sm:flex-row flex-wrap justify-center items-stretch gap-6">
+        <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-6">
 
             <!-- Product 1 -->
             <div class="bg-white rounded-lg shadow-md p-4 w-full sm:w-64 text-center">
                 <img
-                    src="https://placehold.co/300x200?text=Headphones"
+                    src="https://placehold.co/300x200/DBEAFE/1D4ED8?text=Headphones"
+                    onerror="this.onerror=null;this.src='https://dummyimage.com/300x200/DBEAFE/1D4ED8&text=Headphones';"
                     alt="Headphones"
                     class="w-full h-40 object-cover rounded"
                 >
@@ -46,7 +45,8 @@
             <!-- Product 2 -->
             <div class="bg-white rounded-lg shadow-md p-4 w-full sm:w-64 text-center">
                 <img
-                    src="https://placehold.co/300x200?text=Smart+Watch"
+                    src="https://placehold.co/300x200/DCFCE7/166534?text=Smart+Watch"
+                    onerror="this.onerror=null;this.src='https://dummyimage.com/300x200/DCFCE7/166534&text=Smart+Watch';"
                     alt="Smart Watch"
                     class="w-full h-40 object-cover rounded"
                 >
@@ -61,7 +61,8 @@
             <!-- Product 3 -->
             <div class="bg-white rounded-lg shadow-md p-4 w-full sm:w-64 text-center">
                 <img
-                    src="https://placehold.co/300x200?text=Shoes"
+                    src="https://placehold.co/300x200/FEE2E2/991B1B?text=Sports+Shoes"
+                    onerror="this.onerror=null;this.src='https://dummyimage.com/300x200/FEE2E2/991B1B&text=Sports+Shoes';"
                     alt="Sports Shoes"
                     class="w-full h-40 object-cover rounded"
                 >
@@ -76,7 +77,8 @@
             <!-- Product 4 -->
             <div class="bg-white rounded-lg shadow-md p-4 w-full sm:w-64 text-center">
                 <img
-                    src="https://placehold.co/300x200?text=Backpack"
+                    src="https://placehold.co/300x200/FEF3C7/92400E?text=Backpack"
+                    onerror="this.onerror=null;this.src='https://dummyimage.com/300x200/FEF3C7/92400E&text=Backpack';"
                     alt="Backpack"
                     class="w-full h-40 object-cover rounded"
                 >
@@ -89,12 +91,12 @@
             </div>
 
         </div>
-    </section>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center p-4 mt-6">
         <p>&copy; 2026 Product Showcase. All Rights Reserved.</p>
-      <p>Sanjana Budhe CD25045</p>
+        <p>Sanjana Budhe CD25045</p>
     </footer>
 
 </body>
