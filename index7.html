@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Frequently Asked Questions</title>
+
+    <!-- CSS: Website Design -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 28px 16px;
+            font-family: Arial, sans-serif;
+            background: white;
+            color: #31565b;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: auto;
+            padding: 28px 24px 20px;
+            background: #eafcfd;
+            border-radius: 5px;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        .faq-header h1 {
+            color: #176b7d;
+            font-size: 30px;
+            margin: 0 0 8px;
+        }
+
+        .faq-header p {
+            color: #71878a;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .faq-list {
+            max-width: 760px;
+            margin: auto;
+        }
+
+        .faq-item {
+            overflow: hidden;
+            margin-bottom: 12px;
+            border: 1px solid #dcebed;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 4px #19505a14;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px 18px;
+            border: none;
+            background: white;
+            color: #31565b;
+            text-align: left;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .faq-question[aria-expanded="true"],
+        .faq-question:hover {
+            background: #c8f6f8;
+        }
+
+        .toggle-icon {
+            font-size: 21px;
+            color: #176b7d;
+        }
+
+        .faq-answer {
+            padding: 12px 18px 16px;
+            background: white;
+            color: #657477;
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        footer {
+            margin-top: 26px;
+            text-align: center;
+            color: #78888a;
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 10px;
+            }
+
+            .faq-container {
+                padding: 22px 12px;
+            }
+
+            .faq-header h1 {
+                font-size: 24px;
+            }
+
+            .faq-question {
+                padding: 14px 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HTML: Website Content -->
+    <main class="faq-container">
+
+        <header class="faq-header">
+            <h1>Frequently Asked Questions</h1>
+            <p>Web Development Basics - click a question to see the answer</p>
+        </header>
+
+        <section class="faq-list">
+
+            <article class="faq-item">
+                <button class="faq-question" type="button"
+                        aria-expanded="true">
+                    <span>What is HTML?</span>
+                    <span class="toggle-icon">−</span>
+                </button>
+
+                <div class="faq-answer">
+                    HTML (HyperText Markup Language) is the standard
+                    language used to create the structure of a web page
+                    using headings, paragraphs, images and links.
+                </div>
+            </article>
+
+            <article class="faq-item">
+                <button class="faq-question" type="button"
+                        aria-expanded="true">
+                    <span>What is CSS used for?</span>
+                    <span class="toggle-icon">−</span>
+                </button>
+
+                <div class="faq-answer">
+                    CSS (Cascading Style Sheets) is used to style web pages.
+                    It controls colours, fonts, spacing and layout.
+                </div>
+            </article>
+
+            <article class="faq-item">
+                <button class="faq-question" type="button"
+                        aria-expanded="true">
+                    <span>What is JavaScript?</span>
+                    <span class="toggle-icon">−</span>
+                </button>
+
+                <div class="faq-answer">
+                    JavaScript is a programming language that makes web
+                    pages interactive, handles button clicks and updates
+                    content without reloading the page.
+                </div>
+            </article>
+
+            <article class="faq-item">
+                <button class="faq-question" type="button"
+                        aria-expanded="false">
+                    <span>What is Tailwind CSS?</span>
+                    <span class="toggle-icon">+</span>
+                </button>
+
+                <div class="faq-answer" hidden>
+                    Tailwind CSS is a utility-first CSS framework that
+                    lets developers style web pages using ready-made
+                    utility classes.
+                </div>
+            </article>
+
+            <article class="faq-item">
+                <button class="faq-question" type="button"
+                        aria-expanded="false">
+                    <span>What is the DOM?</span>
+                    <span class="toggle-icon">+</span>
+                </button>
+
+                <div class="faq-answer" hidden>
+                    DOM (Document Object Model) represents a web page
+                    as a tree of objects. JavaScript can use it to
+                    change page content and styles.
+                </div>
+            </article>
+
+        </section>
+
+        <footer>
+            Parul Wanjari - CD25029
+        </footer>
+
+    </main>
+
+    <!-- JavaScript: Button Functionality -->
+    <script>
+        const questionButtons =
+            document.querySelectorAll(".faq-question");
+
+        questionButtons.forEach(function(button) {
+
+            button.addEventListener("click", function() {
+
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector(".toggle-icon");
+
+                const isOpen =
+                    button.getAttribute("aria-expanded") === "true";
+
+                button.setAttribute(
+                    "aria-expanded",
+                    String(!isOpen)
+                );
+
+                answer.hidden = isOpen;
+
+                icon.textContent = isOpen ? "+" : "−";
+
+            });
+
+        });
+    </script>
+
+</body>
+</html>
