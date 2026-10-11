@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEase - Practical 205</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-700 text-white p-4">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <h1 class="text-2xl font-bold">ShopEase</h1>
+            <div class="flex gap-5">
+                <a href="#home">Home</a>
+                <a href="#products">Products</a>
+                <a href="#features">Features</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-indigo-50 py-16 px-6">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+
+            <div>
+                <h2 class="text-4xl font-bold text-indigo-900 mb-4">
+                    Introducing Our New Collection
+                </h2>
+
+                <p class="text-gray-600 mb-6">
+                    Stylish, durable and made for everyday life.
+                    Enjoy a seamless shopping experience on any device.
+                </p>
+
+                <a href="#products"
+                   class="bg-indigo-700 text-white px-6 py-3 rounded-lg">
+                    Shop Now
+                </a>
+            </div>
+
+            <img
+                src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=80"
+                alt="New collection"
+                class="w-full h-64 object-cover rounded-xl shadow-lg">
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="max-w-6xl mx-auto py-12 px-6">
+        <h2 class="text-2xl font-bold text-center mb-8">
+            Featured Products
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+            <div class="bg-white rounded-xl shadow p-4">
+                <img
+                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"
+                    alt="Shoes"
+                    class="w-full h-48 object-cover rounded-lg">
+
+                <h3 class="text-xl font-semibold mt-4">Stylish Shoes</h3>
+                <p class="text-gray-600 mt-2">Comfortable everyday footwear.</p>
+                <p class="text-indigo-700 font-bold mt-3">₹1,499</p>
+
+                <button onclick="addToCart('Stylish Shoes')"
+                    class="bg-indigo-700 text-white px-4 py-2 rounded mt-3">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-4">
+                <img
+                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80"
+                    alt="Watch"
+                    class="w-full h-48 object-cover rounded-lg">
+
+                <h3 class="text-xl font-semibold mt-4">Classic Watch</h3>
+                <p class="text-gray-600 mt-2">Simple and elegant accessory.</p>
+                <p class="text-indigo-700 font-bold mt-3">₹1,999</p>
+
+                <button onclick="addToCart('Classic Watch')"
+                    class="bg-indigo-700 text-white px-4 py-2 rounded mt-3">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-4">
+                <img
+                    src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80"
+                    alt="Handbag"
+                    class="w-full h-48 object-cover rounded-lg">
+
+                <h3 class="text-xl font-semibold mt-4">Fashion Bag</h3>
+                <p class="text-gray-600 mt-2">A bag for everyday use.</p>
+                <p class="text-indigo-700 font-bold mt-3">₹999</p>
+
+                <button onclick="addToCart('Fashion Bag')"
+                    class="bg-indigo-700 text-white px-4 py-2 rounded mt-3">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="bg-white py-10 px-6">
+        <h2 class="text-2xl font-bold text-center mb-6">
+            Why Choose ShopEase?
+        </h2>
+
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 text-center">
+            <div class="p-4">
+                <h3 class="font-bold text-indigo-700">Quality Products</h3>
+                <p class="text-gray-600 mt-2">Quality for everyday needs.</p>
+            </div>
+
+            <div class="p-4">
+                <h3 class="font-bold text-indigo-700">Easy Shopping</h3>
+                <p class="text-gray-600 mt-2">Simple shopping interface.</p>
+            </div>
+
+            <div class="p-4">
+                <h3 class="font-bold text-indigo-700">Responsive Design</h3>
+                <p class="text-gray-600 mt-2">Works on mobile and desktop.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-indigo-700 text-white text-center py-6">
+        <h2 class="text-xl font-bold">ShopEase</h2>
+        <p class="mt-2">Your shopping, made easier.</p>
+        <p class="mt-3">&copy; 2026 ShopEase. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function addToCart(productName) {
+            alert(productName + " added to cart!");
+        }
+    </script>
+
+</body>
+</html>
