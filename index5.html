@@ -2,149 +2,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopEase - Practical 205</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Popular Dishes - Food Ordering</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fffaf3;
+    color: #292929;
+}
+
+header {
+    text-align: center;
+    padding: 45px 20px 25px;
+}
+
+header p {
+    color: #c45b20;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+header h1 {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+header .subtitle {
+    color: #777;
+    font-size: 14px;
+    letter-spacing: normal;
+    font-weight: normal;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 15px 20px 50px;
+}
+
+.food-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.food-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    border: 1px solid #eee;
+    transition: transform 0.3s;
+}
+
+.food-card:hover {
+    transform: translateY(-5px);
+}
+
+.food-image {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+}
+
+.pizza { background: #f5e9d7; }
+.paneer { background: #f5e6e8; }
+.burger { background: #f5edda; }
+.noodles { background: #f5edda; }
+.biryani { background: #e4f3ef; }
+.sundae { background: #f7e8ed; }
+
+.food-info {
+    padding: 17px;
+}
+
+.food-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.food-title h3 {
+    font-size: 16px;
+}
+
+.price {
+    color: #a94b13;
+    font-weight: bold;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.description {
+    font-size: 12px;
+    line-height: 1.7;
+    color: #777;
+    min-height: 40px;
+    margin-bottom: 14px;
+}
+
+button {
+    width: 100%;
+    background: #c65318;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #a84210;
+}
+
+.cart {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #222;
+    color: white;
+    padding: 13px 22px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart button {
+    width: auto;
+    padding: 9px 18px;
+}
+
+@media (max-width: 750px) {
+    .food-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    .food-image {
+        height: 120px;
+        font-size: 65px;
+    }
+
+    .food-title h3 {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .food-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .food-image {
+        height: 160px;
+        font-size: 80px;
+    }
+}
+</style>
 </head>
 
-<body class="bg-gray-100 font-sans">
+<body>
 
-    <!-- Navbar -->
-    <nav class="bg-indigo-700 text-white p-4">
-        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-3">
-            <h1 class="text-2xl font-bold">ShopEase</h1>
-            <div class="flex gap-5">
-                <a href="#home">Home</a>
-                <a href="#products">Products</a>
-                <a href="#features">Features</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </div>
-    </nav>
+<header>
+    <p>FRESHLY PREPARED</p>
+    <h1>Popular Dishes</h1>
+    <p class="subtitle">
+        Explore our delicious favorites, prepared fresh and served with care.
+    </p>
+</header>
 
-    <!-- Hero Section -->
-    <section id="home" class="bg-indigo-50 py-16 px-6">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+<main class="container">
+    <div class="food-grid">
 
-            <div>
-                <h2 class="text-4xl font-bold text-indigo-900 mb-4">
-                    Introducing Our New Collection
-                </h2>
-
-                <p class="text-gray-600 mb-6">
-                    Stylish, durable and made for everyday life.
-                    Enjoy a seamless shopping experience on any device.
+        <div class="food-card">
+            <div class="food-image pizza">🍕</div>
+            <div class="food-info">
+                <div class="food-title">
+                    <h3>Garden Pizza</h3>
+                    <span class="price">₹299</span>
+                </div>
+                <p class="description">
+                    Thin-crust pizza topped with fresh vegetables,
+                    cheese, and tomato sauce.
                 </p>
-
-                <a href="#products"
-                   class="bg-indigo-700 text-white px-6 py-3 rounded-lg">
-                    Shop Now
-                </a>
-            </div>
-
-            <img
-                src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=80"
-                alt="New collection"
-                class="w-full h-64 object-cover rounded-xl shadow-lg">
-        </div>
-    </section>
-
-    <!-- Products -->
-    <section id="products" class="max-w-6xl mx-auto py-12 px-6">
-        <h2 class="text-2xl font-bold text-center mb-8">
-            Featured Products
-        </h2>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-
-            <div class="bg-white rounded-xl shadow p-4">
-                <img
-                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"
-                    alt="Shoes"
-                    class="w-full h-48 object-cover rounded-lg">
-
-                <h3 class="text-xl font-semibold mt-4">Stylish Shoes</h3>
-                <p class="text-gray-600 mt-2">Comfortable everyday footwear.</p>
-                <p class="text-indigo-700 font-bold mt-3">₹1,499</p>
-
-                <button onclick="addToCart('Stylish Shoes')"
-                    class="bg-indigo-700 text-white px-4 py-2 rounded mt-3">
-                    Add to Cart
+                <button onclick="addToOrder('Garden Pizza', 299)">
+                    Add to order
                 </button>
             </div>
+        </div>
 
-            <div class="bg-white rounded-xl shadow p-4">
-                <img
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80"
-                    alt="Watch"
-                    class="w-full h-48 object-cover rounded-lg">
-
-                <h3 class="text-xl font-semibold mt-4">Classic Watch</h3>
-                <p class="text-gray-600 mt-2">Simple and elegant accessory.</p>
-                <p class="text-indigo-700 font-bold mt-3">₹1,999</p>
-
-                <button onclick="addToCart('Classic Watch')"
-                    class="bg-indigo-700 text-white px-4 py-2 rounded mt-3">
-                    Add to Cart
+        <div class="food-card">
+            <div class="food-image paneer">🍛</div>
+            <div class="food-info">
+                <div class="food-title">
+                    <h3>Paneer Butter Masala</h3>
+                    <span class="price">₹249</span>
+                </div>
+                <p class="description">
+                    Soft paneer cubes simmered in a rich,
+                    creamy tomato and butter gravy.
+                </p>
+                <button onclick="addToOrder('Paneer Butter Masala', 249)">
+                    Add to order
                 </button>
             </div>
+        </div>
 
-            <div class="bg-white rounded-xl shadow p-4">
-                <img
-                    src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80"
-                    alt="Handbag"
-                    class="w-full h-48 object-cover rounded-lg">
-
-                <h3 class="text-xl font-semibold mt-4">Fashion Bag</h3>
-                <p class="text-gray-600 mt-2">A bag for everyday use.</p>
-                <p class="text-indigo-700 font-bold mt-3">₹999</p>
-
-                <button onclick="addToCart('Fashion Bag')"
-                    class="bg-indigo-700 text-white px-4 py-2 rounded mt-3">
-                    Add to Cart
+        <div class="food-card">
+            <div class="food-image burger">🍔</div>
+            <div class="food-info">
+                <div class="food-title">
+                    <h3>Classic Veg Burger</h3>
+                    <span class="price">₹179</span>
+                </div>
+                <p class="description">
+                    A crispy vegetable patty with lettuce,
+                    tomato, cheese, and house sauce.
+                </p>
+                <button onclick="addToOrder('Classic Veg Burger', 179)">
+                    Add to order
                 </button>
             </div>
-
         </div>
-    </section>
 
-    <!-- Features -->
-    <section id="features" class="bg-white py-10 px-6">
-        <h2 class="text-2xl font-bold text-center mb-6">
-            Why Choose ShopEase?
-        </h2>
-
-        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 text-center">
-            <div class="p-4">
-                <h3 class="font-bold text-indigo-700">Quality Products</h3>
-                <p class="text-gray-600 mt-2">Quality for everyday needs.</p>
-            </div>
-
-            <div class="p-4">
-                <h3 class="font-bold text-indigo-700">Easy Shopping</h3>
-                <p class="text-gray-600 mt-2">Simple shopping interface.</p>
-            </div>
-
-            <div class="p-4">
-                <h3 class="font-bold text-indigo-700">Responsive Design</h3>
-                <p class="text-gray-600 mt-2">Works on mobile and desktop.</p>
+        <div class="food-card">
+            <div class="food-image noodles">🍜</div>
+            <div class="food-info">
+                <div class="food-title">
+                    <h3>Hakka Noodles</h3>
+                    <span class="price">₹199</span>
+                </div>
+                <p class="description">
+                    Stir-fried noodles tossed with crispy
+                    vegetables and savory sauces.
+                </p>
+                <button onclick="addToOrder('Hakka Noodles', 199)">
+                    Add to order
+                </button>
             </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer id="contact" class="bg-indigo-700 text-white text-center py-6">
-        <h2 class="text-xl font-bold">ShopEase</h2>
-        <p class="mt-2">Your shopping, made easier.</p>
-        <p class="mt-3">&copy; 2026 ShopEase. All rights reserved.</p>
-    </footer>
+        <div class="food-card">
+            <div class="food-image biryani">🍲</div>
+            <div class="food-info">
+                <div class="food-title">
+                    <h3>Veg Biryani</h3>
+                    <span class="price">₹229</span>
+                </div>
+                <p class="description">
+                    Fragrant basmati rice cooked with vegetables,
+                    spices, and fresh herbs.
+                </p>
+                <button onclick="addToOrder('Veg Biryani', 229)">
+                    Add to order
+                </button>
+            </div>
+        </div>
 
-    <script>
-        function addToCart(productName) {
-            alert(productName + " added to cart!");
-        }
-    </script>
+        <div class="food-card">
+            <div class="food-image sundae">🍨</div>
+            <div class="food-info">
+                <div class="food-title">
+                    <h3>Chocolate Sundae</h3>
+                    <span class="price">₹149</span>
+                </div>
+                <p class="description">
+                    Vanilla ice cream topped with chocolate
+                    sauce and crunchy toppings.
+                </p>
+                <button onclick="addToOrder('Chocolate Sundae', 149)">
+                    Add to order
+                </button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<div class="cart">
+    <span id="cart-text">Your order: 0 items | Total: ₹0</span>
+    <button onclick="viewOrder()">View Order</button>
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToOrder(name, price) {
+    cart.push({ name: name, price: price });
+    total += price;
+    updateCart();
+
+    alert(name + " added to your order!");
+}
+
+function updateCart() {
+    document.getElementById("cart-text").textContent =
+        "Your order: " + cart.length +
+        " items | Total: ₹" + total;
+}
+
+function viewOrder() {
+    if (cart.length === 0) {
+        alert("Please add a dish to your order first.");
+        return;
+    }
+
+    let message = "YOUR ORDER\n\n";
+
+    cart.forEach(function(item, index) {
+        message += (index + 1) + ". " + item.name +
+                   " - ₹" + item.price + "\n";
+    });
+
+    message += "\nTotal Amount: ₹" + total;
+    alert(message);
+}
+</script>
 
 </body>
 </html>
